@@ -1,0 +1,19 @@
+# Fake clock sync service using time data from filesystem
+# No default dependencies to enable very early execution.  Depends only on local filesystem
+
+[Unit]
+Description=Set system clock using filesystem derived time
+DefaultDependencies=No
+Wants=local-fs.target swap.target
+After=local-fs.target swap.target
+RequiresMountsFor=/opt
+Conflicts=emergency.service emergency.target shutdown.target
+Before=sysinit.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/fake-time-sync/fake-time-sync.sh
+TimeoutSec=150
+
+[Install]
+WantedBy=sysinit.target

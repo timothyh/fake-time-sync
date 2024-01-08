@@ -1,0 +1,20 @@
+fake-time-sync
+
+(Yet another) Trivial shell script to do a clock sync for systems with
+no hardware real-time clock, such as Rasberry Pi's. It is intended to
+run as early as possible in boot sequence, typically right after local
+filesystems are mounted.
+
+Directories vwith high volatility are searched for most recent
+modification time, which is then used as system time. Under normal
+conditions this will get the system clock close to the actual time.
+
+This script expects to be installed in /opt/fake-time-sync.
+
+The install.sh script sets up a systemd service to run this script
+right after local file systems are mounted.
+
+For troubleshooting, examine /tmp/fake-time-sync.log as the clock set
+seems to mess with system journals/logging.
+
+Tested on Fedora but should work on other systemd based systems.
